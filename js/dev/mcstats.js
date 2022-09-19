@@ -70,6 +70,7 @@ mcstats.showView = function(title, subtitle, desc, iconUrl) {
 
     if(iconUrl) {
         mcstats.viewIcon.setAttribute('src', iconUrl);
+        mcstats.viewIcon.setAttribute('onerror', "this.src='img/award-icons/default.png'");
         mcstats.viewIcon.style.display = '';
     } else {
         mcstats.viewIcon.style.display = 'none';
