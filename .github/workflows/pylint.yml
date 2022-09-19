@@ -23,4 +23,4 @@ jobs:
         pip install pylint NBT python-dotenv requests
     - name: Analysing the code with pylint
       run: |
-        pylint --errors-only --disable=no-method-argument,similarities $(git ls-files '*.py')
+        pylint --errors-only --disable=no-self-argument,similarities $(git ls-files '*.py')
