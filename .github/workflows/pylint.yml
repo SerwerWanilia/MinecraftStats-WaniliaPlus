@@ -3,8 +3,7 @@ name: Pylint
 on:
   pull_request:
     types: [opened, reopened, edited]
-    branches:
-    - main
+    branches: [ "master" ]
 
 jobs:
   build:
