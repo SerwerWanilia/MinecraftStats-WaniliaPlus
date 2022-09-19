@@ -2,13 +2,11 @@ from mcstats import mcstats
 
 mcstats.registry.append(
     mcstats.MinecraftStat(
-        'craft_bookshelf',
+        'eat_cabbage',
         {
             'unit': 'int',
         },
-        mcstats.StatSumMatchReader(
-        ['minecraft:crafted'],
-        [
-            '.+:.*bookshelf',
+        mcstats.StatSumReader([
+            mcstats.StatReader(['minecraft:used','farmersdelight:cabbage_rolls'])
         ])
     ))

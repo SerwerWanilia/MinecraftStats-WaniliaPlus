@@ -9,5 +9,11 @@ mcstats.registry.append(
         mcstats.StatSumReader([
             mcstats.StatReader(['minecraft:used','minecraft:iron_bars']),
             mcstats.StatReader(['minecraft:used','minecraft:chain']),
+            mcstats.StatSumMatchReader(
+            	['minecraft:broken'],
+            	[
+                	'alloyed:.+_bars',
+                	'createdeco:.+_bars',
+            	])
         ])
     ))

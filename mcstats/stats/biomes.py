@@ -33,8 +33,21 @@ mcstats.registry.append(
             'unit': 'int',
         },
         StatListReader([
-            'advancements',
-            'minecraft:adventure/adventuring_time',
-            'criteria'
-        ])
+		'advancements',
+                'minecraft:adventure/adventuring_time',
+		'criteria'
+        ]),
+    ))
+
+mcstats.registry.append(
+    ExplorerStat(
+        'biomes_biomesoplenty',
+        {
+            'unit': 'int',
+        },
+        StatListReader([
+		'advancements',
+                'biomesoplenty:biomesoplenty/all_biomes',
+		'criteria'
+        ]),
     ))

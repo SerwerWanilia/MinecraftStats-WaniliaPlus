@@ -20,5 +20,10 @@ mcstats.registry.append(
             mcstats.StatReader(['minecraft:crafted','minecraft:raw_gold_block']),
             mcstats.StatReader(['minecraft:crafted','minecraft:raw_iron_block']),
             mcstats.StatReader(['minecraft:crafted','minecraft:redstone_block']),
+            mcstats.StatReader(['minecraft:crafted','create:brass_block']),
+            mcstats.StatReader(['minecraft:crafted','alloyed:bronze_block']),
+            mcstats.StatReader(['minecraft:crafted','botania:mana_diamond_block']),
+            mcstats.StatReader(['minecraft:crafted','botania:dragonstone_block']),
+            mcstats.StatReader(['minecraft:crafted','nourished_end:voidsteel_block']),
         ])
     ))

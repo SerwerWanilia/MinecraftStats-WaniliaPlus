@@ -6,5 +6,8 @@ mcstats.registry.append(
         {
             'unit': 'int',
         },
-        mcstats.StatReader(['minecraft:used','minecraft:egg'])
+	mcstats.StatSumReader([
+        	mcstats.StatReader(['minecraft:used','minecraft:egg']),
+		mcstats.StatReader(['minecraft:used','alexsmobs:emu_egg']),
+	])
     ))

@@ -18,5 +18,6 @@ mcstats.registry.append(
             mcstats.StatReader(['minecraft:mined','minecraft:granite']),
             mcstats.StatReader(['minecraft:mined','minecraft:smooth_basalt']),
             mcstats.StatReader(['minecraft:mined','minecraft:tuff']),
+	    mcstats.StatReader(['minecraft:mined','create:limestone']),
         ])
     ))
