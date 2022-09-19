@@ -1,4 +1,3 @@
-# pylint: disable=duplicate-code
 from mcstats import mcstats
 
 mcstats.registry.append(
