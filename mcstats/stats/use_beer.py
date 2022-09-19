@@ -2,12 +2,11 @@ from mcstats import mcstats
 
 mcstats.registry.append(
     mcstats.MinecraftStat(
-        'place_rails',
+        'use_beer',
         {
             'unit': 'int',
         },
         mcstats.StatSumMatchReader(
             ['minecraft:used'],
-            ['minecraft:.*rail',
-	    'create:track'],)
+            ['drinkbeer:beer_mug.*'])
     ))

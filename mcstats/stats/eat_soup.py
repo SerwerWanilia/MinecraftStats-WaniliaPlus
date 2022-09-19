@@ -11,5 +11,11 @@ mcstats.registry.append(
             mcstats.StatReader(['minecraft:used','minecraft:beetroot_soup']),
             mcstats.StatReader(['minecraft:used','minecraft:rabbit_stew']),
             mcstats.StatReader(['minecraft:used','minecraft:suspicious_stew']),
+            mcstats.StatSumMatchReader(
+            	['minecraft:used'],
+            	[
+                	'farmersdelight:.+_stew',
+                	'farmersdelight:.+_soup',
+            	])
         ])
     ))

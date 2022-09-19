@@ -21,21 +21,21 @@ body {
     color: #EEE;
 
     background-color: black;
-    background-image: url('img/bg/grass_side.png'), url('img/bg/dirt.png'), url('img/bg/stone.png');
-    background-position: left top, left 64px, left 128px;
-    background-repeat: repeat-x, repeat-x, repeat;
+    background-image: url('img/bg/grass_side.png')/*, url('img/bg/dirt.png'), url('img/bg/stone.png')*/;
+    /*background-position: left top, left 64px, left 128px;
+    background-repeat: repeat-x, repeat-x, repeat;*/
 }
 
 /* Links */
 a {
-    color: #ACF;
+    color:#cbcbcb;
     text-decoration: none;
     text-align: center;
 }
 
 a:hover {
-    color: #ACF;
-    text-decoration: underline;
+    color: #FFFFFF;
+    /*text-decoration: underline;*/
 }
 
 /* Nav */
@@ -54,11 +54,11 @@ a:hover {
     border-color: #333;
 }
 
-.navbar-dark .navbar-nav .nav-link { color: #ACF; }
-.navbar-dark .navbar-nav .nav-link:focus { color: #ACF; }
+.navbar-dark .navbar-nav .nav-link { color: #cbcbcb; }
+.navbar-dark .navbar-nav .nav-link:focus { color: #FFFFFF; }
 .navbar-dark .navbar-nav .nav-link:hover {
-    color: #ACF;
-    text-decoration: underline;
+    color: #FFFFFF;
+    /*text-decoration: underline;*/
 }
 
 /* Info */
@@ -69,10 +69,10 @@ a:hover {
 
 /* Text content types */
 .text-muted { color: #999 !important; }
-.text-success { color: #AFA !important; }
-.text-danger { color: #FAA !important; }
+.text-success { color:#00AA00 !important; }
+.text-danger { color: #AA0000 !important; }
 .text-info { color: #CCF !important; }
-.text-data { color: #FFA !important; }
+.text-data { color: #AA00AA !important; }
 
 /* Tables */
 .table thead th {
@@ -158,9 +158,9 @@ a:hover {
 }
 
 .page-link:hover {
-    border-color: #ACF;
+    border-color: #AAAAAA;
     background-color: rgba(0, 0, 0, 0.33);
-    color: #ACF;
+    color: #AAAAAA;
 }
 
 .page-dots {
@@ -192,29 +192,29 @@ a:hover {
 }
 
 a.dropdown-item {
-    color: #ACF;
+    color: #AAAAAA;
     text-decoration: none;
 }
 
 a.dropdown-item:hover {
-    color: #ACF;
+    color: #AAAAAA;
     text-decoration: underline;
 }
 
 /* Specials */
-.rank   { color: #888; }
-.rank-1 { color: #FC0; }
+.rank   { color: #AAAAAA; }
+.rank-1 { color: #FFAA00; }
 .rank-2 { color: #DDF; }
 .rank-3 { color: #A80; }
 
 .round-box {
-    background-color: rgba(0,0,0,0.5);
-    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    /*border-radius: 0.5rem;*/
 }
 
 .mcstats-entry {
     border: 0.125rem solid #444;
-    border-radius: 0.75rem;
+    /*border-radius: 0.75rem;*/
 
     background-image: url('img/bg/stonebrick.png');
 }
@@ -227,7 +227,7 @@ a.dropdown-item:hover {
 }
 
 #footer {
-    background-image: url('img/bg/bedrock.png');
+    /*background-image: url('img/bg/bedrock.png');*/
     background-position: top left;
     background-repeat: repeat;
 }

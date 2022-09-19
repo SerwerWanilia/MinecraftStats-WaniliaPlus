@@ -9,5 +9,10 @@ mcstats.registry.append(
         mcstats.StatSumReader([
             mcstats.StatReader(['minecraft:mined','minecraft:grass']),
             mcstats.StatReader(['minecraft:mined','minecraft:tall_grass']),
+	        mcstats.StatSumMatchReader(
+            ['minecraft:broken'],
+            [
+                'biomesoplenty:.+_grass',
+	    ])
         ])
     ))

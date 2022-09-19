@@ -8,5 +8,10 @@ mcstats.registry.append(
         },
         mcstats.StatSumMatchReader(
             ['minecraft:crafted'],
-            ['minecraft:.+_sword'])
+            ['minecraft:.+_sword',
+            'nourished_end:voidsteel_sword',
+            'additionaladditions:.+_sword',
+            'alloyed:.+_sword',
+            'botania:.+_sword'
+	])
     ))

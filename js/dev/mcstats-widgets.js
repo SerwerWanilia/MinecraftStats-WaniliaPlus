@@ -188,7 +188,7 @@ mcstats.lastOnlineWidget = function(last) {
 mcstats.awardWidget = function(id) {
     var award = mcstats.awards[id];
     return `
-        <img class="img-pixelated img-textsize-1_5 align-baseline" src="img/award-icons/${id}.png" alt="${id}" title="${award.title}"/>
+        <img class="img-pixelated img-textsize-1_5 align-baseline" src="img/award-icons/${id}.png" onerror="this.src='img/award-icons/default.png'" alt="${id}" title="${award.title}"/>
         <a href="#award:${id}">${award.title}</a>
     `;
 }
@@ -199,7 +199,7 @@ mcstats.eventWidget = function(id) {
     var awardId = e.link;
     var award = mcstats.awards[id];
     return `
-        <img class="img-pixelated img-textsize-1_5 align-baseline" src="img/award-icons/${awardId}.png" alt="${id}" title="${e.title}"/>
+        <img class="img-pixelated img-textsize-1_5 align-baseline" src="img/award-icons/${awardId}.png" onerror="this.src='img/award-icons/default.png'" alt="${id}" title="${e.title}"/>
         <a href="#event:${id}">${e.title}</a>
     `;
 }

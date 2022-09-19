@@ -2,13 +2,11 @@ from mcstats import mcstats
 
 mcstats.registry.append(
     mcstats.MinecraftStat(
-        'craft_bookshelf',
+        'killed_by_cachalot',
         {
             'unit': 'int',
         },
-        mcstats.StatSumMatchReader(
-        ['minecraft:crafted'],
-        [
-            '.+:.*bookshelf',
+        mcstats.StatSumReader([
+            mcstats.StatReader(['minecraft:killed_by','alexsmobs:cachalot_whale'])
         ])
     ))

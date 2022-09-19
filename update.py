@@ -4,13 +4,10 @@ import collections
 import datetime 
 import gzip
 import json
-import math
 import os
 import re
 import shutil
-import sys
-import traceback
-import types
+from nbt import nbt
 
 # import custom modules
 import javaproperties
@@ -22,6 +19,8 @@ from mcstats.util import handle_error
 from mcstats.util import RecursiveNamespace
 from mcstats.util import merge_dict
 from mcstats.stats import *
+from notify import notifyPlayers
+from dailyevents import dailyEvents
 
 # default config
 configJson = config.defaultConfig
@@ -108,6 +107,8 @@ eventTimeFormat = '%Y-%m-%d %H:%M'
 
 events = []
 eventNames = set()
+for dailyEvent in dailyEvents(statByName):
+    events.append(Event(title=dailyEvent['title'], name=dailyEvent['name'], stat=statByName[dailyEvent['stat']], startTime=int(datetime.datetime.strptime(dailyEvent['startTime'], eventTimeFormat).timestamp()), endTime=int(datetime.datetime.strptime(dailyEvent['endTime'], eventTimeFormat).timestamp())))
 
 for e in config.events:
     if e.name in statByName:
@@ -287,25 +288,41 @@ for uuid, player in players.items():
     playtimeTicks = 0
     version = 0
     datasets = []
+
+    nbtFileName = f"{worldDir}/playerdata/{uuid}.dat"
+    if os.path.isfile(nbtFileName):
+        waniliaPlusStats = {
+            'playerMoney': 0,
+            'playerXpLevel': 0
+        }
+        
+        nbtFile = nbt.NBTFile(nbtFileName,'rb')
+
+        try:
+            waniliaPlusStats['playerMoney'] = nbtFile["ForgeCaps"]["curios:inventory"]["Curios"][3][0][3][1][0][3][0][0].value
+        except:
+            pass
+
+        waniliaPlusStats['playerXpLevel'] = nbtFile["XpLevel"].value
     
     for i, statsDir in enumerate(statsDirs):
         dataFilename = os.path.join(statsDir, uuid + '.json')
         if os.path.isfile(dataFilename):
             last = max(last, int(os.path.getmtime(dataFilename)))
             
-            try:
-                with open(dataFilename) as f:
-                    data = json.load(f)
-            except Exception as e:
-                print('failed to load \"' + dataFilename + '\" - may be corrupted, skipping')
-                print(e)
-                continue
+            with open(dataFilename) as f:
+                data = json.load(f)
 
             if 'DataVersion' in data:
                 version = max(version, data['DataVersion'])
 
             if 'stats' in data:
                 stats = data['stats']
+
+                stats['waniliaplus'] = {}
+
+                for waniliaPlusStat in waniliaPlusStats.keys():
+                    stats['waniliaplus'][f'waniliaplus:{waniliaPlusStat}'] = waniliaPlusStats[waniliaPlusStat]
                 
                 if 'minecraft:custom' in stats:
                     custom = stats['minecraft:custom']
@@ -350,20 +367,22 @@ for uuid, player in players.items():
     # determine activity
     player['last'] = last
     active = is_active(last)
-    
+
     # update skin
     if (not 'name' in player) or active or config.players.updateInactive:
+    #if 1:
         if 'update' in player:
             update_time = player['update']
         else:
             update_time = 0
 
         if (not 'name' in player) or (not 'skin' in player) or (mcstats.now - update_time > profile_update_interval):
+        #if 1:
             try:
                 print('updating profile for ' + uuid + ' ...')
 
                 # try to get profile via Mojang API
-                profile = mojang.get_player_profile(uuid)
+                profile = mojang.get_player_profile(player['name'])
                 
                 if profile:
                     # get name and skin
@@ -447,7 +466,7 @@ for mcstat in mcstats.registry:
         continue
 
     # sort ranking
-    mcstat.sort()
+    mcstat.sort(mcstat.reversedSort)
 
     # process crown score points
     for i in range(0, len(mcstat.ranking)):
@@ -610,6 +629,9 @@ for uuid in summaryPlayerIds:
         'skin': player['skin'] if ('skin' in player) else False,
         'last': player['last'],
     }
+
+# notify players
+notifyPlayers(awards)
 
 # write summary for client
 summary = {

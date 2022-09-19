@@ -2,12 +2,13 @@ from mcstats import mcstats
 
 mcstats.registry.append(
     mcstats.MinecraftStat(
-        'place_rails',
+        'craft_any',
         {
             'unit': 'int',
         },
         mcstats.StatSumMatchReader(
-            ['minecraft:used'],
-            ['minecraft:.*rail',
-	    'create:track'],)
+            ['minecraft:crafted'],
+            [
+                '.+:.+',
+            ])
     ))

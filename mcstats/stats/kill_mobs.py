@@ -38,7 +38,6 @@ create_kill_stat('shulker')
 create_kill_stat('silverfish')
 create_kill_stat('slime')
 create_kill_stat('vex')
-create_kill_stat('warden', 3082 ) # added in 22w12a
 create_kill_stat('witch')
 create_kill_stat('wither_skeleton')
 
@@ -57,21 +56,18 @@ create_kill_stat('zombified_piglin', 2510)   # added in 20w09a
 create_kill_stat('piglin_brute', 2569)   # added in 20w27a
 
 # Passives
-create_kill_stat('allay', 3085) #added in 22w13a
 create_kill_stat('axolotl', 2687) #added in 20w51a
 create_kill_stat('bat')
 create_kill_stat('chicken')
 create_kill_stat('cow')
 create_kill_stat('horse')
 create_kill_stat('fox', 1932) # added in 19w07a
-create_kill_stat('frog', 3080 ) # added in 22w11a
 create_kill_stat('mooshroom')
 create_kill_stat('parrot')
 create_kill_stat('pig')
 create_kill_stat('rabbit')
 create_kill_stat('sheep')
 create_kill_stat('strider', 2520) # added in 20w13a
-create_kill_stat('tadpole', 3080 ) # added in 22w11a
 create_kill_stat('turtle', 1467) # added in 18w07a
 create_kill_stat('villager')
 create_kill_stat('wandering_trader', 1930) # added in 19w05a
@@ -199,6 +195,10 @@ mcstats.registry.append(
             mcstats.StatReader(['minecraft:killed','minecraft:salmon']),
             mcstats.StatReader(['minecraft:killed','minecraft:pufferfish']),
             mcstats.StatReader(['minecraft:killed','minecraft:tropical_fish']),
+	    mcstats.StatReader(['minecraft:killed','alexsmobs:flying_fish']),
+	    mcstats.StatReader(['minecraft:killed','alexsmobs:blobfish']),
+	    mcstats.StatReader(['minecraft:killed','alexsmobs:catfish']),
+	    mcstats.StatReader(['minecraft:killed','alexsmobs:devils_hole_pupfish']),
         ]),
         1471 # fish mobs added in 18w08b
     ))
@@ -214,4 +214,33 @@ mcstats.registry.append(
             mcstats.StatReader(['minecraft:killed','minecraft:glow_squid']),
             mcstats.StatReader(['minecraft:killed','minecraft:squid']),
         ])
+    ))
+
+mcstats.registry.append(
+    mcstats.MinecraftStat(
+        'kill_bird',
+        {
+            'unit': 'int',
+        },
+        mcstats.StatSumReader([
+            mcstats.StatReader(['minecraft:killed','alexsmobs:roadrunner']),
+            mcstats.StatReader(['minecraft:killed','alexsmobs:hummingbird']),
+            mcstats.StatReader(['minecraft:killed','alexsmobs:sunbird']),
+            mcstats.StatReader(['minecraft:killed','alexsmobs:shoebill']),
+            mcstats.StatReader(['minecraft:killed','alexsmobs:soul_vulture']),
+            mcstats.StatReader(['minecraft:killed','alexsmobs:spectre']),
+            mcstats.StatReader(['minecraft:killed','alexsmobs:crow']),
+            mcstats.StatReader(['minecraft:killed','alexsmobs:bald_eagle']),
+            mcstats.StatReader(['minecraft:killed','alexsmobs:seagull']),
+            mcstats.StatReader(['minecraft:killed','alexsmobs:toucan']),
+        ])
+    ))
+
+mcstats.registry.append(
+    mcstats.MinecraftStat(
+        'kill_fly',
+        {
+            'unit': 'int',
+        },
+        mcstats.StatReader(['minecraft:killed','alexsmobs:fly'])
     ))

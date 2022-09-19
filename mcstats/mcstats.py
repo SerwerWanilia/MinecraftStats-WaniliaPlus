@@ -101,8 +101,8 @@ class Ranking:
         self.ranking.append(RankingEntry(id, value))
 
     # sort ranking
-    def sort(self):
-        self.ranking.sort(reverse=True)
+    def sort(self, isReversed = True):
+        self.ranking.sort(reverse=isReversed)
 
 # Aggregation functions
 def aggregateSum(a, b):
@@ -110,7 +110,7 @@ def aggregateSum(a, b):
 
 # Base for all minecraft stats
 class MinecraftStat(Ranking):
-    def __init__(self, name, meta, reader, minVersion = 1451, maxVersion = float("inf")):
+    def __init__(self, name, meta, reader, minVersion = 1451, maxVersion = float("inf"), reversedSort = True, includeZero = False):
         Ranking.__init__(self)
         self.name = name
         self.meta = meta
@@ -120,12 +120,18 @@ class MinecraftStat(Ranking):
         self.linkedStat = False
         self.playerStatRelevant = True
         self.aggregate = aggregateSum
+        self.reversedSort = reversedSort
+        self.includeZero = includeZero
 
     # enter the player with id and value into the ranking
     def enter(self, id, value):
         # only if greater than zero
-        if value > 0:
-            Ranking.enter(self, id, value)
+        if not self.includeZero:
+            if value > 0:
+                Ranking.enter(self, id, value)
+        else:
+            if value >= 0:
+                Ranking.enter(self, id, value)
         #elif value < 0:
         #    print('Negative value (' + str(value) + ') for stat ' + self.name)
 
@@ -158,15 +164,17 @@ class EventStat(Ranking):
         self.webranking = []
         self.linkedStat = True
         self.playerStatRelevant = False
+        self.includeZero = False
 
     # enter the player with id and value delta into the ranking
     def enter(self, id, value):
         global now
         
         value = value['value'] # yikes!
-
         if self.hasStarted():
             # subtract initial value and enter
+            if not len(self.initialRanking):
+                self.initialRanking[id] = value
             if id in self.initialRanking:
                 initial = self.initialRanking[id]
             else:

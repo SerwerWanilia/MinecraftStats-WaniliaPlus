@@ -2,12 +2,13 @@ from mcstats import mcstats
 
 mcstats.registry.append(
     mcstats.MinecraftStat(
-        'place_rails',
+        'kill_goblin',
         {
             'unit': 'int',
         },
         mcstats.StatSumMatchReader(
-            ['minecraft:used'],
-            ['minecraft:.*rail',
-	    'create:track'],)
+            ['minecraft:killed'],
+            [
+                'goblinsanddungeons:.*'
+            ])
     ))
