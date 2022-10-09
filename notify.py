@@ -3,16 +3,20 @@ import json
 import dotenv
 import requests
 
-def statNameFromId(id):
-    localizationFile = json.load(open('./localization/pl.json', 'r', encoding='utf-8'))
-    if f'award.{id}.title' in localizationFile.keys():
-        title = localizationFile[f'award.{id}.title']
+def statNameFromId(awardId):
+    with open('./localization/pl.json', 'r', encoding='utf-8') as jsonFile:
+        localizationFile = json.load(jsonFile)
+    if f'award.{awardId}.title' in localizationFile.keys():
+        title = localizationFile[f'award.{awardId}.title']
         return title
+    return 0
 
 def UUIDtoNick(UUID):
-    players = json.load(open('./data/players.json', 'r'))
+    with open('./data/players.json', 'r', encoding='utf-8') as jsonFile:
+        players = json.load(jsonFile)
     if UUID in players.keys():
         return players[UUID]['name']
+    return 0
 
 def sendCommands(commands):
     config = dotenv.dotenv_values('.env')
@@ -39,16 +43,9 @@ def comparePlaceChange(newAwards):
         if len(newAwards[award]) > 1:
             firstPlaceNew[award] = newAwards[award]['best']['uuid']
 
-    for newAward in firstPlaceNew:
-        if newAward in firstPlaceOld.keys():
-            if firstPlaceNew[newAward] != firstPlaceOld[newAward]:
-                playerUUID = firstPlaceNew[newAward]
-                if playerUUID not in playersToNotify.keys():
-                    playersToNotify[playerUUID] = []
-                playersToNotify[playerUUID].append(newAward)
-        else:
-            playerUUID = firstPlaceNew[newAward]
-            if playerUUID not in playersToNotify.keys():
+    for newAward, playerUUID in firstPlaceNew.items():
+        if newAward not in firstPlaceOld or playerUUID != firstPlaceOld[newAward]:
+            if playerUUID not in playersToNotify:
                 playersToNotify[playerUUID] = []
             playersToNotify[playerUUID].append(newAward)
 
@@ -57,15 +54,39 @@ def comparePlaceChange(newAwards):
 def notifyPlayers(newAwards):
     playersToNotify = comparePlaceChange(newAwards)
     commands = []
-    for player in playersToNotify:
-        command = 'tellraw ' + UUIDtoNick(player) + ' [{"text":"§7Zająłeś/aś właśnie prowadzenie w statystykach: "}'
+    for player, awards in playersToNotify:
+        nick = UUIDtoNick(player)
+
+        if not nick:
+            continue
+
+        command = (
+            'tellraw ' +
+            UUIDtoNick(player) +
+            ' [{"text":"§7Zająłeś/aś właśnie prowadzenie w statystykach: "}'
+            )
+
         i = 0
-        for award in playersToNotify[player]:
+        for award in awards:
+            statName = statNameFromId(award)
+
+            if not statName:
+                continue
+
             i += 1
-            command += ',{"text":"§5' + statNameFromId(award) + '§7","clickEvent":{"action":"open_url","value":"https://serwerwanilia.pl/statystyki/#award:' + award + '"},"hoverEvent":{"action":"show_text","contents":["§5Link§7"]}}'
+            command += (
+                ',{"text":"§5' +
+                statNameFromId(award) +
+                '§7","clickEvent":{"action":"open_url","value":"https://serwerwanilia.pl/statystyki/#award:' +
+                award +
+                '"},"hoverEvent":{"action":"show_text","contents":["§5Link§7"]}}'
+                )
+
             if i != len(playersToNotify[player]):
                 command += ',{"text":"§7, "}'
+
         command += ']'
         commands.append(command)
-    
-    if len(commands): sendCommands(commands)
+
+    if commands:
+        sendCommands(commands)
